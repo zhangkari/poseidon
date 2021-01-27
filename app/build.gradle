@@ -1,0 +1,38 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+def support = depends.support
+def test = depends.test
+
+android {
+    compileSdkVersion 30
+
+    defaultConfig {
+        applicationId "com.class100.yunshixun"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.core:core-ktx:$core_ktx"
+    implementation support.appcompat
+    implementation support.constraitLayout
+    implementation project(':atropos')
+    testImplementation test.junit
+    androidTestImplementation test.andJunit
+    androidTestImplementation test.espresso
+}
