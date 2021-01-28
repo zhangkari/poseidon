@@ -3,8 +3,6 @@ package com.class100.atropos.env.context;
 import androidx.annotation.ArrayRes;
 import androidx.annotation.StringRes;
 
-import com.class100.atropos.AtContextAbility;
-
 public final class AtRes extends AtContextAbility {
     public static String getString(@StringRes int id) {
         return env._app.getString(id);

@@ -1,7 +1,5 @@
 package com.class100.atropos.generic;
 
-import com.class100.atropos.AtAbilityAdapter;
-
 public final class AtTexts extends AtAbilityAdapter {
     public static boolean isEmpty(CharSequence text) {
         return text == null || text.length() < 1;

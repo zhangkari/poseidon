@@ -1,4 +1,6 @@
-package com.class100.atropos;
+package com.class100.atropos.generic;
+
+import com.class100.atropos.AtAbility;
 
 public abstract class AtAbilityAdapter implements AtAbility {
     @Override

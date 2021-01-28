@@ -1,6 +1,6 @@
 package com.class100.atropos.generic;
 
-import com.class100.atropos.AtAbilityAdapter;
+import java.lang.reflect.Constructor;
 
 public final class AtRuntime extends AtAbilityAdapter {
     public static void throwNPE(String message) {
@@ -18,5 +18,23 @@ public final class AtRuntime extends AtAbilityAdapter {
                 .append("\n");
         }
         return sb.toString();
+    }
+
+    public static <T> T newInstance(Class<T> clazz) {
+        try {
+            Constructor<T> cls = clazz.getConstructor();
+            return cls.newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException("reflect failed:" + e.getMessage());
+        }
+    }
+
+    public static <T> T newInstance(Class<T> clazz, Class<?> parameter, Object arg) {
+        try {
+            Constructor<T> cls = clazz.getConstructor(parameter);
+            return cls.newInstance(arg);
+        } catch (Exception e) {
+            throw new RuntimeException("reflect failed:" + e.getMessage());
+        }
     }
 }

@@ -2,8 +2,6 @@ package com.class100.atropos.generic;
 
 import android.util.Log;
 
-import com.class100.atropos.AtAbilityAdapter;
-
 public final class AtLog extends AtAbilityAdapter {
     private static boolean enable;
 

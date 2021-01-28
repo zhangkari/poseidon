@@ -1,7 +1,5 @@
 package com.class100.atropos.generic;
 
-import com.class100.atropos.AtAbilityAdapter;
-
 import java.util.Collection;
 
 public final class AtCollections extends AtAbilityAdapter {

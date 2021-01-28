@@ -1,3 +1,6 @@
+include ':muses'
+include ':oceanides'
+include ':poseidon'
 include ':atropos'
 include ':app'
 rootProject.name = "Yunshixun"

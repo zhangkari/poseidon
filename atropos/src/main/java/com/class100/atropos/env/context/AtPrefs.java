@@ -1,7 +1,5 @@
 package com.class100.atropos.env.context;
 
-import com.class100.atropos.AtContextAbility;
-
 public final class AtPrefs extends AtContextAbility {
     private static final String TAG = "AtPrefs";
 
