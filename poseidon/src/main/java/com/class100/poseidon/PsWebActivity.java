@@ -3,7 +3,6 @@ package com.class100.poseidon;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -75,13 +74,17 @@ public class PsWebActivity extends OcActivity {
     }
 
     @Override
-    public void onCreate(Bundle bundle) {
-        super.onCreate(bundle);
-        setContentView(R.layout.ps_activity_web);
-        init();
+    protected int getContentLayout() {
+        return R.layout.ps_activity_web;
     }
 
-    private void init() {
+    @Override
+    protected int getTitleLayout() {
+        return 0;
+    }
+
+    @Override
+    protected void init() {
         findViews();
         initWebView();
         String url = getIntent().getStringExtra("url");

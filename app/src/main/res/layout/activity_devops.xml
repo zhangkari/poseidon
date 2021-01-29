@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="12dp">
@@ -24,7 +25,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:inputType="textUri"
-                android:minWidth="80dp" />
+                android:minWidth="80dp"
+                android:textColor="@android:color/black" />
         </LinearLayout>
 
         <Button
@@ -36,7 +38,26 @@
             android:paddingTop="4dp"
             android:paddingEnd="12dp"
             android:paddingBottom="4dp"
-            android:text="@string/go"
+            android:text="go"
             android:textAllCaps="false" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btn_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="4dp"
+            android:paddingBottom="8dp"
+            android:text="camera"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
 </LinearLayout>

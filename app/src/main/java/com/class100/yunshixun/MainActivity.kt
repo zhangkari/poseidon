@@ -1,6 +1,5 @@
 package com.class100.yunshixun
 
-import android.os.Bundle
 import android.view.View
 import com.class100.atropos.generic.AtFreqClick
 import com.class100.oceanides.OcActivity
@@ -10,9 +9,12 @@ class MainActivity : OcActivity() {
         AtFreqClick(5, 1000)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun getContentLayout(): Int {
+        return R.layout.activity_main
+    }
+
+    override fun init() {
+        super.init()
         setListener()
     }
 

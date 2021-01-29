@@ -1,5 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.class100.oceanides">
 
-    /
+    <application>
+        <activity
+            android:name=".camera.OcCameraActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+    </application>
 </manifest>

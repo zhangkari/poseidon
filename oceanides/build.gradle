@@ -30,6 +30,7 @@ android {
 
 dependencies {
     implementation support.appcompat
+    implementation project(":atropos")
     testImplementation test.junit
     androidTestImplementation test.andJunit
     androidTestImplementation test.espresso
