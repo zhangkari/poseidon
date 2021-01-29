@@ -4,11 +4,13 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.class100.atropos.generic.AtLog;
 import com.class100.atropos.generic.AtTexts;
 import com.class100.oceanides.OcActivity;
+import com.class100.poseidon.extension.plugins.WebExtKeyEventPlugin;
 import com.tencent.smtt.export.external.TbsCoreSettings;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.TbsListener;
@@ -20,12 +22,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PsWebActivity extends OcActivity {
+    private static final String MODULE = "Poseidon";
     private static final String TAG = "PsWebActivity";
 
     private View progressView;
     private PsWebView webView;
 
     public static void initialize(Application app) {
+        if (QbSdk.isTbsCoreInited()) {
+            AtLog.d(MODULE, TAG, "QbSdk init ok");
+            return;
+        }
         Map<String, Object> map = new HashMap<>();
         map.put(TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER, true);
         map.put(TbsCoreSettings.TBS_SETTINGS_USE_DEXLOADER_SERVICE, true);
@@ -34,29 +41,29 @@ public class PsWebActivity extends OcActivity {
         QbSdk.setTbsListener(new TbsListener() {
             @Override
             public void onDownloadFinish(int i) {
-                AtLog.d(PluginManifest.MODULE, TAG, "onDownloadFinish:" + i);
+                AtLog.d(MODULE, TAG, "onDownloadFinish:" + i);
             }
 
             @Override
             public void onInstallFinish(int i) {
-                AtLog.d(PluginManifest.MODULE, TAG, "onInstallFinish:" + i);
+                AtLog.d(MODULE, TAG, "onInstallFinish:" + i);
             }
 
             @Override
             public void onDownloadProgress(int i) {
-                AtLog.d(PluginManifest.MODULE, TAG, "onDownloadProgress:" + i);
+                AtLog.d(MODULE, TAG, "onDownloadProgress:" + i);
             }
         });
 
         QbSdk.initX5Environment(app, new QbSdk.PreInitCallback() {
             @Override
             public void onCoreInitFinished() {
-                AtLog.d(PluginManifest.MODULE, TAG, "onCoreInitFinished");
+                AtLog.d(MODULE, TAG, "onCoreInitFinished");
             }
 
             @Override
             public void onViewInitFinished(boolean b) {
-                AtLog.d(PluginManifest.MODULE, TAG, "onCoreInitFinished:" + b);
+                AtLog.d(MODULE, TAG, "onViewInitFinished:" + b);
             }
         });
     }
@@ -75,17 +82,38 @@ public class PsWebActivity extends OcActivity {
     }
 
     private void init() {
+        findViews();
+        initWebView();
+        String url = getIntent().getStringExtra("url");
+        if (!AtTexts.isEmpty(url)) {
+            webView.loadUrl(url);
+        }
+    }
+
+    private void findViews() {
         progressView = findViewById(R.id.ps_web_progress);
         webView = findViewById(R.id.ps_web_webView);
+    }
+
+    private void initWebView() {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView var1, String var2) {
                 progressView.setVisibility(View.GONE);
             }
         });
-        String url = getIntent().getStringExtra("url");
-        if (!AtTexts.isEmpty(url)) {
-            webView.loadUrl(url);
-        }
+        webView.setWebChromeClient(new WebChromeClient() {
+
+        });
+        WebExtPluginService.getInstance().register(webView);
+        webView.setOnKeyDownEventListener(new PsWebView.OnKeyDownEventListener() {
+            @Override
+            public void onKeyDown(KeyEvent event) {
+                WebExtKeyEventPlugin plugin = WebExtPluginService.getInstance().getPlugin(WebExtPluginManifest.KEY_EVENT);
+                if (plugin != null && plugin.isEnabled()) {
+                    plugin.executeJsCallbackFunction(event);
+                }
+            }
+        });
     }
 }

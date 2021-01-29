@@ -8,7 +8,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application>
-        <activity android:name=".PsWebActivity" />
+        <activity
+            android:name=".PsWebActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 
         <service
             android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"

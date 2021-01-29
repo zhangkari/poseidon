@@ -5,17 +5,17 @@ import android.webkit.JavascriptInterface;
 
 import com.class100.atropos.generic.AtLog;
 import com.class100.atropos.generic.AtTexts;
-import com.class100.poseidon.PluginManifest;
-import com.class100.poseidon.extension.ExtPlugin;
-import com.class100.poseidon.extension.ExtPluginEnv;
+import com.class100.poseidon.extension.WebExtPlugin;
+import com.class100.poseidon.extension.WebExtPluginEnv;
 
-public class ExtKeyEventPlugin extends ExtPlugin {
-    private static final String TAG = ExtKeyEventPlugin.class.getSimpleName();
+public class WebExtKeyEventPlugin extends WebExtPlugin {
+    private static final String MODULE = "Poseidon";
+    private static final String TAG = WebExtKeyEventPlugin.class.getSimpleName();
 
     private String keyEventListener;
 
-    public ExtKeyEventPlugin(ExtPluginEnv extPluginEnv) {
-        super(extPluginEnv);
+    public WebExtKeyEventPlugin(WebExtPluginEnv webExtPluginEnv) {
+        super(webExtPluginEnv);
     }
 
     /**
@@ -39,8 +39,19 @@ public class ExtKeyEventPlugin extends ExtPlugin {
      */
     @JavascriptInterface
     public void registerKeyEventListener(String keyEventListener) {
-        AtLog.d(PluginManifest.MODULE, TAG, "listener:" + keyEventListener);
+        AtLog.d(MODULE, TAG, " listener:" + keyEventListener);
         this.keyEventListener = keyEventListener;
+    }
+
+    public void executeJsCallbackFunction(final KeyEvent event) {
+        final String callbackFunction = synthesizeJsFuncName(event);
+        AtLog.d(MODULE, TAG, "executeJsCallback:" + callbackFunction);
+        context.webView.post(new Runnable() {
+            @Override
+            public void run() {
+                context.webView.loadUrl(callbackFunction);
+            }
+        });
     }
 
     /**
@@ -48,7 +59,7 @@ public class ExtKeyEventPlugin extends ExtPlugin {
      * @return
      * @hiden
      */
-    public String synthesizeJsFuncName(KeyEvent event) {
+    private String synthesizeJsFuncName(KeyEvent event) {
         if (AtTexts.isEmpty(keyEventListener)) {
             return "";
         }

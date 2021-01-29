@@ -28,4 +28,16 @@ public abstract class AtPlugin<T extends AtPluginEnv> implements AtAbility {
     public void unload() {
         context.loaded = false;
     }
+
+    public boolean isEnabled() {
+        return context.enabled;
+    }
+
+    public boolean isLoaded() {
+        return context.loaded;
+    }
+
+    public String getId() {
+        return context.key;
+    }
 }
