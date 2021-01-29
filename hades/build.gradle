@@ -1,13 +1,20 @@
 apply plugin: 'com.android.library'
 
+def build = depends.build
+def support = depends.support
+def test = depends.test
+
+def version_code = 000001
+def version_name = "0.0.1"
+
 android {
-    compileSdkVersion 30
+    compileSdkVersion build.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion build.minSdkVersion
+        targetSdkVersion build.compileSdkVersion
+        versionCode version_code
+        versionName version_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -22,10 +29,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
+    implementation support.appcompat
+    implementation project(":atropos")
+    testImplementation test.junit
+    androidTestImplementation test.andJunit
+    androidTestImplementation test.espresso
 }
