@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Yunshixun</string>
+
+    <string name="go">Go</string>
 </resources>

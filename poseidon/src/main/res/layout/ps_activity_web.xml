@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp" />
 
-    <WebView
+    <com.class100.poseidon.PsWebView
         android:id="@+id/ps_web_webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

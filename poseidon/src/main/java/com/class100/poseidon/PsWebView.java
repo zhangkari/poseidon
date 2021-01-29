@@ -7,7 +7,6 @@ import android.view.KeyEvent;
 
 import com.class100.atropos.env.AtPlugin;
 import com.class100.atropos.generic.AtRuntime;
-import com.class100.poseidon.extension.ExtPlugin;
 import com.class100.poseidon.extension.ExtPluginEnv;
 import com.class100.poseidon.extension.plugins.ExtKeyEventPlugin;
 import com.tencent.smtt.sdk.WebSettings;
@@ -88,11 +87,10 @@ public class PsWebView extends WebView {
     }
 
     private void registerJavascriptInterface() {
-        WebView webView = (WebView) getView();
         for (Map.Entry<String, Class<? extends AtPlugin<ExtPluginEnv>>> entry : PluginManifest.extensions.entrySet()) {
             Class<? extends AtPlugin<ExtPluginEnv>> clazz = entry.getValue();
             ExtPluginEnv env = buildPluginEnv(entry.getKey(), clazz);
-            webView.addJavascriptInterface(env.plugin, env.key);
+            addJavascriptInterface(env.plugin, env.key);
             if (env.key.equals(PluginManifest.KEY_EVENT)) {
                 extKeyEvent = (ExtKeyEventPlugin) env.plugin;
             }
@@ -101,7 +99,7 @@ public class PsWebView extends WebView {
 
     private ExtPluginEnv buildPluginEnv(String key, Class<? extends AtPlugin<ExtPluginEnv>> clazz) {
         ExtPluginEnv env = new ExtPluginEnv(key);
-        env.plugin = AtRuntime.newInstance(clazz, ExtPlugin.class, env);
+        env.plugin = AtRuntime.newInstance(clazz, ExtPluginEnv.class, env);
         return env;
     }
 }

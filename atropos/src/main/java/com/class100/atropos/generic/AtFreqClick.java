@@ -25,7 +25,7 @@ public class AtFreqClick extends AtAbilityAdapter {
     }
 
     private void detectFreqClick(int count, long duration, Runnable task) {
-        System.arraycopy(hits, 1, hits, 0, hits.length);
+        System.arraycopy(hits, 1, hits, 0, hits.length - 1);
         hits[hits.length - 1] = SystemClock.elapsedRealtime();
         if (SystemClock.elapsedRealtime() <= hits[0] + duration) {
             hits = new long[count];

@@ -37,6 +37,7 @@ dependencies {
     implementation support.appcompat
     implementation support.constraitLayout
     implementation project(':atropos')
+    implementation project(":oceanides")
     implementation project(":poseidon")
     testImplementation test.junit
     androidTestImplementation test.andJunit
