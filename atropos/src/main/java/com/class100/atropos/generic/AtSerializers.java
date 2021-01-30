@@ -17,7 +17,12 @@ public final class AtSerializers extends AtAbilityAdapter {
         return _gson.fromJson(json, clazz);
     }
 
-    public static <T> List<T> fromJson2(String json, Class<T> clazz) {
+    public static <T> T fromJsonEx(String json, Class<T> clazz) {
+        return _gson.fromJson(json, new TypeToken<T>() {
+        }.getType());
+    }
+
+    public static <T> List<T> listFromJson(String json, Class<T> clazz) {
         return _gson.fromJson(json, new TypeToken<List<T>>() {
         }.getType());
     }

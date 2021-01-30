@@ -30,6 +30,7 @@ android {
 
 dependencies {
     implementation support.appcompat
+    implementation 'com.squareup.okhttp3:okhttp:4.2.2'
     implementation project(":atropos")
     testImplementation test.junit
     androidTestImplementation test.andJunit
