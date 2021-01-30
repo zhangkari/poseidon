@@ -42,7 +42,7 @@ public final class HaHttpClient extends AtContextAbility {
         dispatcher.dispatch(command, callback);
     }
 
-    public <T> void enqueue(HaApiRequest request, HaApiCallback<T> callback) {
+    public <T> void enqueue(HaRequest request, HaApiCallback<T> callback) {
         dispatcher.dispatch(request, callback);
     }
 

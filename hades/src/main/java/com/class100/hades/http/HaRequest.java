@@ -28,10 +28,12 @@ public abstract class HaRequest {
     int method;
     Map<String, String> headers;
     Map<String, String> parameters;
+    Map<String, String> userParams;
 
     public HaRequest() {
         headers = new HashMap<>(8);
         parameters = new HashMap<>(8);
+        userParams = new HashMap<>(8);
     }
 
     protected String getId() {
@@ -48,12 +50,18 @@ public abstract class HaRequest {
         return METHOD_GET;
     }
 
-    protected Map<String, String> getParameters() {
-        return null;
+    protected Map<String, String> buildParameters(final Map<String, String> map) {
+        return map;
     }
 
     protected Map<String, String> getHeaders() {
         return null;
+    }
+
+    private Map<String, String> getUserParameters() {
+        userParams.clear();
+        userParams = buildParameters(userParams);
+        return userParams;
     }
 
     final String emit() {
@@ -61,7 +69,7 @@ public abstract class HaRequest {
         group = getGroup();
         url = getUrl();
         method = getMethod();
-        Map<String, String> map = getParameters();
+        Map<String, String> map = getUserParameters();
         if (!AtCollections.isEmpty(map)) {
             parameters.putAll(map);
         }

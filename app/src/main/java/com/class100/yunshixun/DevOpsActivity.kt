@@ -2,14 +2,19 @@ package com.class100.yunshixun
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.class100.atropos.env.context.AtPrefs
+import com.class100.hades.http.HaApiCallback
+import com.class100.hades.http.HaHttpClient
 import com.class100.oceanides.OcActivity
 import com.class100.oceanides.camera.OcCameraActivity
 import com.class100.poseidon.PsWebActivity
+import com.class100.yunshixun.model.request.YsxTokenRequest
 import kotlinx.android.synthetic.main.activity_devops.*
 
 class DevOpsActivity : OcActivity() {
     companion object {
+        private val TAG = DevOpsActivity::javaClass.name
         private const val DEV_OPS_URL_HISTORY = "dev_ops_url_history";
 
         fun launch(context: Context) {
@@ -31,6 +36,20 @@ class DevOpsActivity : OcActivity() {
 
         btn_camera.setOnClickListener {
             OcCameraActivity.launch(it.context)
+        }
+
+        btn_get_token.setOnClickListener {
+            HaHttpClient.getInstance().enqueue(
+                YsxTokenRequest("15928695284", "ZSC1988love"),
+                object : HaApiCallback<String> {
+                    override fun onError(code: Int, message: String?) {
+                        Log.d(TAG, "error:$code, message")
+                    }
+
+                    override fun onSuccess(content: String?) {
+                        Log.d(TAG, "ok:$content")
+                    }
+                })
         }
     }
 }
