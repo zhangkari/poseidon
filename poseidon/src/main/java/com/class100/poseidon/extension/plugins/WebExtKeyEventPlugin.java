@@ -46,6 +46,9 @@ public class WebExtKeyEventPlugin extends WebExtPlugin {
     public void executeJsCallbackFunction(final KeyEvent event) {
         final String callbackFunction = synthesizeJsFuncName(event);
         AtLog.d(MODULE, TAG, "executeJsCallback:" + callbackFunction);
+        if (AtTexts.isEmpty(callbackFunction)) {
+            return;
+        }
         context.webView.post(new Runnable() {
             @Override
             public void run() {
