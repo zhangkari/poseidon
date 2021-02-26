@@ -21,6 +21,10 @@
 
         <activity android:name=".DevOpsActivity" />
 
+        <activity
+            android:name="com.class100.poseidon.PsWebActivity"
+            android:theme="@style/PsWebActivity" />
+
     </application>
 
 </manifest>
