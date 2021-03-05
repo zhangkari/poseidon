@@ -29,13 +29,5 @@ class DevOpsActivity : OcActivity() {
             PsWebActivity.launch(it.context, et_url.text.toString())
             AtPrefs.put(DEV_OPS_URL_HISTORY, et_url.text.toString())
         }
-
-        btn_camera.setOnClickListener {
-            OcCameraActivity.launch(it.context)
-        }
-
-        btn_get_token.setOnClickListener {
-
-        }
     }
 }

@@ -9,6 +9,7 @@ import android.view.View;
 import com.class100.atropos.generic.AtLog;
 import com.class100.atropos.generic.AtTexts;
 import com.class100.oceanides.OcActivity;
+import com.class100.poseidon.extension.plugins.WebExtContainerPlugin;
 import com.class100.poseidon.extension.plugins.WebExtKeyEventPlugin;
 import com.tencent.smtt.export.external.TbsCoreSettings;
 import com.tencent.smtt.sdk.QbSdk;
@@ -109,14 +110,24 @@ public class PsWebActivity extends OcActivity {
 
         });
         WebExtPluginService.getInstance().register(webView);
-        webView.setOnKeyDownEventListener(new PsWebView.OnKeyDownEventListener() {
-            @Override
-            public void onKeyDown(KeyEvent event) {
-                WebExtKeyEventPlugin plugin = WebExtPluginService.getInstance().getPlugin(WebExtPluginManifest.KEY_EVENT);
-                if (plugin != null && plugin.isEnabled()) {
-                    plugin.executeJsCallbackFunction(event);
-                }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            WebExtKeyEventPlugin plugin = WebExtPluginService.getInstance().getPlugin(WebExtPluginManifest.KEY_EVENT);
+            if (plugin != null && plugin.isEnabled()) {
+                plugin.executeJsCallbackFunction(event);
             }
-        });
+
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                WebExtContainerPlugin containerPlugin = WebExtPluginService.getInstance().getPlugin(WebExtPluginManifest.CONTAINER);
+                if (containerPlugin != null && containerPlugin.isEnabled()) {
+                    containerPlugin.performDefaultBack();
+                }
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

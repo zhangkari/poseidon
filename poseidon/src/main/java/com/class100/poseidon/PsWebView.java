@@ -4,13 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
 
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 
 public class PsWebView extends WebView {
-    private OnKeyDownEventListener keyEventListener;
 
     public PsWebView(Context context) {
         super(context);
@@ -25,20 +23,6 @@ public class PsWebView extends WebView {
     public PsWebView(Context context, AttributeSet attributeSet, int i) {
         super(context, attributeSet, i);
         init();
-    }
-    
-    public void setOnKeyDownEventListener(OnKeyDownEventListener listener) {
-        keyEventListener = listener;
-    }
-
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            if (keyEventListener != null) {
-                keyEventListener.onKeyDown(event);
-            }
-        }
-        return super.dispatchKeyEvent(event);
     }
 
     private void init() {
@@ -74,9 +58,5 @@ public class PsWebView extends WebView {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings.setMixedContentMode(webSettings.getMixedContentMode());
         }
-    }
-
-    public interface OnKeyDownEventListener {
-        void onKeyDown(KeyEvent event);
     }
 }
