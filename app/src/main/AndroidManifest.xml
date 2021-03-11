@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.class100.poseidon.PsWebActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,10 +20,6 @@
         </activity>
 
         <activity android:name=".DevOpsActivity" />
-
-        <activity
-            android:name="com.class100.poseidon.PsWebActivity"
-            android:theme="@style/PsWebActivity" />
 
     </application>
 
