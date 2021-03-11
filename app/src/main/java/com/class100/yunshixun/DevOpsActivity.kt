@@ -4,9 +4,8 @@ import android.content.Context
 import android.content.Intent
 import com.class100.atropos.env.context.AtPrefs
 import com.class100.oceanides.OcActivity
-import com.class100.oceanides.camera.OcCameraActivity
 import com.class100.poseidon.PsWebActivity
-import kotlinx.android.synthetic.main.activity_devops.*
+import kotlinx.android.synthetic.main.activity_poseidon_devops.*
 
 class DevOpsActivity : OcActivity() {
     companion object {
@@ -19,7 +18,7 @@ class DevOpsActivity : OcActivity() {
     }
 
     override fun getContentLayout(): Int {
-        return R.layout.activity_devops
+        return R.layout.activity_poseidon_devops
     }
 
     override fun init() {

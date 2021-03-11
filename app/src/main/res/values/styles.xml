@@ -10,5 +10,7 @@
     <style name="PsWebActivity" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="android:windowTranslucentNavigation">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
     </style>
 </resources>
