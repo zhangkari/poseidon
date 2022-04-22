@@ -115,7 +115,16 @@ public class PsWebActivity extends OcActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url.equals(interceptScheme)) {
+                Uri uri;
+                try {
+                    uri = Uri.parse(url);
+                } catch (Exception e) {
+                    return false;
+                }
+                if (uri.getScheme() == null) {
+                    return false;
+                }
+                if (uri.getScheme().equalsIgnoreCase(interceptScheme)) {
                     dispatchInterceptScheme(url);
                     return true;
                 }
@@ -124,7 +133,11 @@ public class PsWebActivity extends OcActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                if (request.getUrl().toString().equals(interceptScheme)) {
+                String scheme = request.getUrl().getScheme();
+                if (scheme == null) {
+                    return false;
+                }
+                if (scheme.equalsIgnoreCase(interceptScheme)) {
                     dispatchInterceptScheme(request.getUrl().toString());
                     return true;
                 }
