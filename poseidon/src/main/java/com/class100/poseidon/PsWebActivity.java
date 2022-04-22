@@ -3,6 +3,7 @@ package com.class100.poseidon;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -12,6 +13,7 @@ import com.class100.oceanides.OcActivity;
 import com.class100.poseidon.extension.plugins.WebExtContainerPlugin;
 import com.class100.poseidon.extension.plugins.WebExtKeyEventPlugin;
 import com.tencent.smtt.export.external.TbsCoreSettings;
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.TbsListener;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -27,6 +29,7 @@ public class PsWebActivity extends OcActivity {
 
     private View progressView;
     private PsWebView webView;
+    private String interceptScheme;
 
     public static void initialize(Application app) {
         if (QbSdk.isTbsCoreInited()) {
@@ -74,6 +77,10 @@ public class PsWebActivity extends OcActivity {
         context.startActivity(intent);
     }
 
+    public void setInterceptScheme(String scheme) {
+        interceptScheme = scheme;
+    }
+
     @Override
     protected int getContentLayout() {
         return R.layout.ps_activity_web;
@@ -105,11 +112,34 @@ public class PsWebActivity extends OcActivity {
             public void onPageFinished(WebView var1, String var2) {
                 progressView.setVisibility(View.GONE);
             }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url.equals(interceptScheme)) {
+                    dispatchInterceptScheme(url);
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (request.getUrl().toString().equals(interceptScheme)) {
+                    dispatchInterceptScheme(request.getUrl().toString());
+                    return true;
+                }
+                return super.shouldOverrideUrlLoading(view, request);
+            }
         });
         webView.setWebChromeClient(new WebChromeClient() {
 
         });
         WebExtPluginService.getInstance().register(webView);
+    }
+
+    private void dispatchInterceptScheme(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(intent);
     }
 
     @Override
