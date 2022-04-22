@@ -29,7 +29,7 @@ public class PsWebActivity extends OcActivity {
 
     private View progressView;
     private PsWebView webView;
-    private String interceptScheme;
+    private static String interceptScheme;
 
     public static void initialize(Application app) {
         if (QbSdk.isTbsCoreInited()) {
@@ -77,7 +77,7 @@ public class PsWebActivity extends OcActivity {
         context.startActivity(intent);
     }
 
-    public void setInterceptScheme(String scheme) {
+    public static void setInterceptScheme(String scheme) {
         interceptScheme = scheme;
     }
 
