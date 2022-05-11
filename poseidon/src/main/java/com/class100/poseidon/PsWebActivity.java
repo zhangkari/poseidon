@@ -173,4 +173,8 @@ public class PsWebActivity extends OcActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    public PsWebView getWebView() {
+        return webView;
+    }
 }
