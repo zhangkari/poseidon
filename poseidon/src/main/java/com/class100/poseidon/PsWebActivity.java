@@ -31,6 +31,8 @@ public class PsWebActivity extends OcActivity {
     private PsWebView webView;
     private static String interceptScheme;
 
+    private Runnable onPageFinishedListener;
+
     public static void initialize(Application app) {
         if (QbSdk.isTbsCoreInited()) {
             AtLog.d(MODULE, TAG, "QbSdk init ok");
@@ -81,6 +83,10 @@ public class PsWebActivity extends OcActivity {
         interceptScheme = scheme;
     }
 
+    public void setOnPageFinishedListener(Runnable listener) {
+        onPageFinishedListener = listener;
+    }
+
     @Override
     protected int getContentLayout() {
         return R.layout.ps_activity_web;
@@ -111,6 +117,9 @@ public class PsWebActivity extends OcActivity {
             @Override
             public void onPageFinished(WebView var1, String var2) {
                 progressView.setVisibility(View.GONE);
+                if (onPageFinishedListener != null) {
+                    onPageFinishedListener.run();
+                }
             }
 
             @Override
